@@ -1,30 +1,35 @@
 const solve1 = (input) => {
-  let complements = {};
-  for (let current of input) {
-    let complement = 2020 - current;
-    const exists = complements[current];
-    if (exists) {
+  const complements = {};
+
+  for (const entry of input) {
+    // check if entry is complement to an entry we've seen before
+    const isComplement = complements[entry];
+    if (isComplement) {
       // we found our pair
-      return complements[current] * current;
+      return complements[entry] * entry;
     }
 
-    complements[complement] = current;
+    const complement = 2020 - entry;
+    complements[complement] = entry;
   }
 
   throw new Error('no matching pairs found :(');
 };
 
 const solve2 = (input) => {
-  let complements = {};
-  let seen = [];
-  for (let current of input) {
-    let match = seen.find(x => complements[x + current])
+  const complements = {};
+  const seenEntries = [];
+  for (const entry of input) {
+    // check if entry + any previously seen entry is a needed complement
+    const match = seenEntries.find(seen => complements[seen + entry]);
     if (match) {
-      return match * current * complements[match + current];
+      // we found our pairs
+      return match * entry * complements[match + entry];
     }
     
-    seen.push(current);
-    complements[2020 - current] = current;
+    const complement = 2020 - entry;
+    complements[complement] = entry;
+    seenEntries.push(entry);
   }
 
   throw new Error('no matching pairs found :(');
