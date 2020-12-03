@@ -30,7 +30,7 @@ const solve2 = (patterns) => {
 
   return instructions
     .map(([down, right]) => traverseAndCountTrees(patterns, down, right))
-    .reduce((res, x) => x * res, 1);
+    .reduce((x, y) => x * y);
 };
 
 module.exports = {
