@@ -31,4 +31,19 @@ describe('[03]', () => {
       expect(actualAnswer).toEqual(expectedAnswer);
     });
   });
+
+  describe('part 2', () => {
+    it('should pass with example input', () => {
+      const expectedAnswer = 336;
+      const actualAnswer = solve2(exampleInput);
+      expect(actualAnswer).toEqual(expectedAnswer);
+    });
+
+    it('should pass with actual input', () => {
+      const expectedAnswer = 9406609920;
+      const input = parseInputAsArray(path.resolve(__dirname,'input.txt'));
+      const actualAnswer = solve2(input);
+      expect(actualAnswer).toEqual(expectedAnswer);
+    });
+  });
 });

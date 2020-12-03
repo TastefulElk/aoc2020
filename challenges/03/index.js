@@ -1,20 +1,37 @@
-const solve1 = (patterns) => {
+const traverseAndCountTrees = (patterns, downStep, rightStep) => {
   const patternLength = patterns[0].length;
-
   let treeCount = 0;
-  let i = 0;
-  for (const pattern of patterns) {
-    if (pattern[i % patternLength] === '#') {
+  let xPos = 0;
+  for (let yPos = 0; yPos < patterns.length; yPos = yPos + downStep) {
+    const pattern = patterns[yPos];
+    if (pattern[xPos % patternLength] === '#') {
       treeCount++;
     }
 
-    i = i + 3;
+    xPos = xPos + rightStep;
   }
 
   return treeCount;
 };
 
-const solve2 = (lines) => {};
+const solve1 = (patterns) => {
+  const treeCount = traverseAndCountTrees(patterns, 1, 3);
+  return treeCount;
+};
+
+const solve2 = (patterns) => {
+  const instructions = [
+    [1, 1],
+    [1, 3],
+    [1, 5],
+    [1, 7],
+    [2, 1],
+  ];
+
+  return instructions
+    .map(([down, right]) => traverseAndCountTrees(patterns, down, right))
+    .reduce((res, x) => x * res, 1);
+};
 
 module.exports = {
   solve1,
