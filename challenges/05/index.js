@@ -31,27 +31,25 @@ const getCol = (boardingPass) =>
   search(boardingPass.slice(7, boardingPass.length), 7, 'R', 'L');
 
 const solve1 = (boardingPasses) => {
-  let highestSeatId = 0;
-  for (let boardingPass of boardingPasses) {
+  const highestSeatId = boardingPasses.reduce((highest, boardingPass) => {
     const row = getRow(boardingPass);
     const col = getCol(boardingPass);
     const seatId = getSeatId(row, col);
 
-    highestSeatId = seatId > highestSeatId ? seatId : highestSeatId;
-  }
+    return highest > seatId ? highest : seatId;
+  }, 0);
 
   return highestSeatId;
 };
 
 const solve2 = (boardingPasses) => {
-  const seatIds = [];
-  for (let boardingPass of boardingPasses) {
+  const seatIds = boardingPasses.map(boardingPass => {
     const row = getRow(boardingPass);
     const col = getCol(boardingPass);
     const seatId = getSeatId(row, col);
 
-    seatIds.push(seatId);
-  }
+    return seatId;
+  });
 
   const sortedSeatIds = seatIds.sort((a, b) => a - b);
   for (let i = 0; i < sortedSeatIds.length; i++) {
